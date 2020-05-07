@@ -1,32 +1,39 @@
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-
+import java.util.List;
+import java.util.Random;
 public class Movie {
 
     // Movie attributes
     private String title;
     private int length;
     private char[] letters;
+    private static Random generator = new Random();
+
+    //method to choose a random string from a list
+    public static String randomChoice(List<String> list){
+        int randomIndex = generator.nextInt(list.size()); 
+        return list.get(randomIndex);
+    }
 
     // Movie constructor
-    public Movie(URI file) throws IOException {
+    public Movie() throws IOException {
+        Path moviePath = Paths.get("movielist.txt");
+        
         try {
-            // calculate numb of Movie titles present in the file
-            int numOfLines = (int) Files.lines(Paths.get(file)).count();
-
-            // choose a random line
-            // you might have to doand then math.ran +1 to not get zero or smthing
-            int chosenMovieLine = (int) Math.round(numOfLines * Math.random());
-
+            //populate list with all movies from file
+            //randomly choose one to instantiate Movie object
+            List<String> lines = Files.readAllLines(moviePath);
+            
             // populate attributes
-            title = Files.readAllLines(Paths.get(file)).get(chosenMovieLine);
+            title = randomChoice(lines);
             length = title.length();
             letters = title.toCharArray();
 
         } catch (IOException e) {
-            System.out.println("File can't be used to choose a movie!");
+            System.out.println("File can't be read.");
         }
     } // end of constructor
 
