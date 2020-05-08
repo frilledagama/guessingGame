@@ -39,6 +39,9 @@ public class GuessTheMovie {
         //create empty list for wrong guesses
         List wrongGuessList = new LinkedList<Character>();
 
+        boolean gameOver = false;
+       
+        while (!gameOver){
         //show game text (guess, curr guesses, wrong guesses etc.)
         gameText(hiddenTitle, wrongGuessList);
 
@@ -46,10 +49,12 @@ public class GuessTheMovie {
         char guess = makeGuess(newMovie.getTitle(), hiddenTitle);
 
         //check if guess is a match
-        checkGuess(guess, newMovie.getLetters(), hiddenTitle, wrongGuessList);
-        
+        gameOver = checkGuess(guess, newMovie.getLetters(), hiddenTitle, wrongGuessList);
+
+        }
         //gameText(hiddenTitle, wrongGuessList);
         //System.out.println("The movie is: " + newMovie.getTitle());
+        System.out.println("Owow game is over.");
 
     }// end of playGame
 
@@ -80,24 +85,18 @@ public class GuessTheMovie {
     private static char makeGuess(String title, char[] letters) {
 
         // get char input from player
-        Scanner input = new Scanner(System.in);
-        String guess = input.nextLine();
+        Scanner sc = new Scanner(System.in);
+        //String guess = input.next();
 
-        // get character/letter guess
-        while (guess.length() != 1) {
-            if (guess.equalsIgnoreCase(title)) {
-                // TODO: call the you win method (make you win method)
-                // break
-            }
-            System.out.println("Please input a single character or guess the full title.");
-            guess = input.nextLine();
+        while (!sc.hasNext("[a-z]")){
+            System.out.println("Please input a single char");
+            sc.next();
         }
+
+        String guess = sc.next();
 
         // read the scanner input as a char
         char letterGuess = guess.charAt(0);
-
-        //close scanner
-        input.close();
 
         return letterGuess;
     }
@@ -111,8 +110,9 @@ public class GuessTheMovie {
     }// end of gameText
 
     //method to check if the guess matches a character
-    private static void checkGuess(char guess, char[] letters, char[] hiddenTitle, List wrongGuessList){
+    private static boolean checkGuess(char guess, char[] letters, char[] hiddenTitle, List wrongGuessList){
         int correctGuess = 0;
+        boolean gameOver = false;
         for (int i = 0; i < letters.length; i++){
             if (guess == letters[i]){
                 hiddenTitle[i] = letters[i];
@@ -120,10 +120,20 @@ public class GuessTheMovie {
             }
         }
 
-        //update wrong Guesses
+        //update wrong Guesses or check if the ans is correct
         if (correctGuess == 0){
             wrongGuessList.add(guess);
+        } else if (hiddenTitle.equals(letters)) {
+            System.out.println("You win!");
+            gameOver = true;
         }
+
+        if (wrongGuessList.size() > 10) {
+            System.out.println("You Lose! The answer was " + String.valueOf(letters));
+            gameOver = true;
+        }
+
+        return gameOver;
     }
 
 }// end of class
