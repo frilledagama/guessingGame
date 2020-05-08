@@ -17,7 +17,7 @@ import java.util.LinkedList;
 public class GuessingGame {
     public static void main(String args[]) {
         try {
-            String file = ("pkmnlist.txt");
+            String file = ("C:\\Users\\Maya\\Documents\\School\\Udacity\\udacity-oop-course\\pkmnlist.txt");
 
             // play the game
 
@@ -91,7 +91,7 @@ public class GuessingGame {
         Scanner sc = new Scanner(System.in);
         //String guess = input.next();
 
-        while (!sc.hasNext("[a-z]")){
+        while (!sc.hasNext(".")){
             System.out.println("Please input a single char");
             sc.next();
         }
