@@ -19,8 +19,8 @@ public class Movie {
     }
 
     // Movie constructor
-    public Movie() throws IOException {
-        Path moviePath = Paths.get("movielist.txt");
+    public Movie(String file) throws IOException {
+        Path moviePath = Path.of(file);
         
         try {
             //populate list with all movies from file
