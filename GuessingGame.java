@@ -17,7 +17,7 @@ import java.util.LinkedList;
 public class GuessingGame {
     public static void main(String args[]) {
         try {
-            String file = ("C:\\Users\\Maya\\Documents\\School\\Udacity\\udacity-oop-course\\pkmnlist.txt");
+            String file = ("pkmnlist.txt");
 
             // play the game
 
